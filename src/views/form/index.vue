@@ -20,7 +20,7 @@
         </el-col>
       </el-form-item>
       <el-form-item label="Instant delivery">
-        <el-switch on-text="" off-text="" v-model="form.delivery"></el-switch>
+        <el-switch v-model="form.delivery"></el-switch>
       </el-form-item>
       <el-form-item label="Activity type">
         <el-checkbox-group v-model="form.type">
@@ -41,7 +41,7 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">Create</el-button>
-        <el-button>Cancel</el-button>
+        <el-button @click="onCancel">Cancel</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -66,7 +66,20 @@ export default {
   methods: {
     onSubmit() {
       this.$message('submit!')
+    },
+    onCancel() {
+      this.$message({
+        message: 'cancel!',
+        type: 'warning'
+      })
     }
   }
 }
 </script>
+
+<style scoped>
+.line{
+  text-align: center;
+}
+</style>
+
