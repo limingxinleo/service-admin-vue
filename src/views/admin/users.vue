@@ -7,19 +7,19 @@
                     {{scope.row.id}}
                 </template>
             </el-table-column>
-            <el-table-column label="Title">
-                <template slot-scope="scope">
-                    {{scope.row.title}}
-                </template>
-            </el-table-column>
             <el-table-column label="昵称" width="110" align="center">
                 <template slot-scope="scope">
                     <span>{{scope.row.nickname}}</span>
                 </template>
             </el-table-column>
-            <el-table-column label="Pageviews" width="110" align="center">
+            <el-table-column label="角色">
                 <template slot-scope="scope">
-                    {{scope.row.pageviews}}
+                    <el-tag v-for="role in scope.row.roles" type="success">{{role.name}}</el-tag>
+                </template>
+            </el-table-column>
+            <el-table-column label="登录名" width="110" align="center">
+                <template slot-scope="scope">
+                    {{scope.row.username}}
                 </template>
             </el-table-column>
             <el-table-column class-name="status-col" label="权限等级" width="110" align="center">
@@ -51,11 +51,7 @@
     },
     filters: {
       statusFilter(status) {
-        const statusMap = {
-          published: 'success',
-          draft: 'gray',
-          deleted: 'danger'
-        }
+        const statusMap = ['success', 'danger']
         return statusMap[status]
       }
     },
