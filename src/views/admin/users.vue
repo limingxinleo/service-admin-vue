@@ -12,7 +12,7 @@
                     <span>{{scope.row.nickname}}</span>
                 </template>
             </el-table-column>
-            <el-table-column label="角色">
+            <el-table-column label="角色列表">
                 <template slot-scope="scope">
                     <el-tag v-for="role in scope.row.roles" type="success">{{role.name}}</el-tag>
                 </template>
