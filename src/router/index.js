@@ -33,13 +33,28 @@ export const constantRouterMap = [
       component: () => import('@/views/dashboard/index')
     }]
   },
-
+  {
+    path: '/admin',
+    component: Layout,
+    redirect: '/admin/users',
+    name: '管理员管理',
+    meta: { title: 'System', icon: 'example' },
+    children: [
+      {
+        path: 'users',
+        name: 'Users',
+        component: () => import('@/views/admin/users'),
+        meta: { title: '管理员列表', icon: 'table' }
+      }
+    ]
+  },
   {
     path: '/example',
     component: Layout,
     redirect: '/example/table',
     name: 'Example',
     meta: { title: 'Example', icon: 'example' },
+    hidden: true,
     children: [
       {
         path: 'table',
