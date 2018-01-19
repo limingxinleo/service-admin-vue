@@ -45,7 +45,7 @@
         }
       }
       const validatePass = (rule, value, callback) => {
-        if (value.length < 5) {
+        if (value.length < 4) {
           callback(new Error('密码不能小于5位'))
         } else {
           callback()
