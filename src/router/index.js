@@ -38,13 +38,18 @@ export const constantRouterMap = [
     component: Layout,
     redirect: '/admin/users',
     name: '管理员管理',
-    meta: { title: 'System', icon: 'example' },
+    meta: { title: '管理员管理', icon: 'example' },
     children: [
       {
         path: 'users',
-        name: 'Users',
+        name: '管理员列表',
         component: () => import('@/views/admin/users'),
         meta: { title: '管理员列表', icon: 'table' }
+      }, {
+        path: 'user_add',
+        name: '新增管理员',
+        component: () => import('@/views/admin/user_add'),
+        meta: { title: '新增管理员', icon: 'table' }
       }
     ]
   },

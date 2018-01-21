@@ -7,3 +7,11 @@ export function getUsers(params) {
     params
   })
 }
+
+export function addUser(params) {
+  return request({
+    url: '/api/user/save',
+    method: 'post',
+    params
+  })
+}

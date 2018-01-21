@@ -60,16 +60,16 @@
     },
     methods: {
       fetchData() {
-        let that = this
+        const that = this
         this.listLoading = true
 
-        let params = {
+        const params = {
           pageIndex: this.pageIndex,
           pageSize: this.pageSize
         }
         getUsers(params).then(response => {
-          let data = response.data;
-          that.list = data.items;
+          const data = response.data
+          that.list = data.items
           this.listLoading = false
         })
       }
