@@ -26,7 +26,7 @@ export const constantRouterMap = [
     path: '/',
     component: Layout,
     redirect: '/dashboard',
-    name: 'Dashboard',
+    name: '主页',
     hidden: true,
     children: [{
       path: 'dashboard',
@@ -50,6 +50,26 @@ export const constantRouterMap = [
         name: '新增管理员',
         component: () => import('@/views/admin/user_add'),
         meta: { title: '新增管理员', icon: 'table' }
+      }
+    ]
+  },
+  {
+    path: '/router',
+    component: Layout,
+    redirect: '/router/routes',
+    name: '路由管理',
+    meta: { title: '路由管理', icon: 'example' },
+    children: [
+      {
+        path: 'routes',
+        name: '路由列表',
+        component: () => import('@/views/router/routes'),
+        meta: { title: '路由列表', icon: 'table' }
+      }, {
+        path: 'route_add',
+        name: '新增路由',
+        component: () => import('@/views/router/route_add'),
+        meta: { title: '新增路由', icon: 'table' }
       }
     ]
   },
@@ -79,6 +99,7 @@ export const constantRouterMap = [
   {
     path: '/form',
     component: Layout,
+    hidden: true,
     children: [
       {
         path: 'index',
