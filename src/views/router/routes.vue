@@ -36,6 +36,14 @@
                     </template>
                 </el-table-column>
             </el-table>
+
+            <div class="pagination-container">
+                <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange"
+                               :current-page.sync="pageIndex"
+                               :page-sizes="[10,20,30, 50]" :page-size="pageSize"
+                               layout="total, sizes, prev, pager, next, jumper" :total="total">
+                </el-pagination>
+            </div>
         </div>
     </div>
 </template>
@@ -48,7 +56,7 @@
       return {
         list: null,
         listLoading: true,
-        pageIndex: 0,
+        pageIndex: 1,
         pageSize: 10
       }
     },
@@ -67,13 +75,14 @@
         this.listLoading = true
 
         const params = {
-          pageIndex: this.pageIndex,
+          pageIndex: this.pageIndex - 1,
           pageSize: this.pageSize
         }
         getRoutes(params).then(response => {
           const data = response.data
           console.log(data)
           that.list = data.items
+          that.total = data.total
           this.listLoading = false
         })
       },
@@ -82,7 +91,15 @@
           console.log(response.data)
           this.fetchData()
         })
-      }
+      },
+      handleSizeChange(val) {
+        this.pageSize = val
+        this.fetchData()
+      },
+      handleCurrentChange(val) {
+        this.pageIndex = val
+        this.fetchData()
+      },
     }
   }
 </script>
