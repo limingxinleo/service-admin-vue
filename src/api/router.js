@@ -15,3 +15,10 @@ export function addRoute(params) {
     params
   })
 }
+
+export function reloadRoutes() {
+  return request({
+    url: '/api/router/update',
+    method: 'post'
+  })
+}

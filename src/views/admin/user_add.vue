@@ -37,12 +37,7 @@
     },
     methods: {
       onSubmit() {
-        const that = this
-
-        const params = this.form
-
-        addUser(params).then(response => {
-          const data = response.data
+        addUser(this.form).then(response => {
           console.log(response)
           this.$message('保存成功')
         })
