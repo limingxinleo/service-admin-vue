@@ -1,11 +1,11 @@
 <template>
     <div class="app-container">
-        <sticky :className="'sub-navbar'">
+        <div :className="'sub-navbar'">
             <template>
-                <el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="reloadRoutes()">刷新路由
+                <el-button style="margin-left: 10px;" type="success" @click="reloadRoutes()">刷新路由
                 </el-button>
             </template>
-        </sticky>
+        </div>
         <div class="routes-main-container">
             <el-table :data="list" v-loading.body="listLoading" element-loading-text="Loading" border fit
                       highlight-current-row>

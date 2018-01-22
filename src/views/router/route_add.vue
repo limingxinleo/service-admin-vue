@@ -1,17 +1,11 @@
 <template>
     <div class="app-container">
-        <el-form ref="user_add" :model="form" label-width="120px">
-            <el-form-item label="姓名">
-                <el-input v-model="form.nickname"></el-input>
+        <el-form ref="route_add" :model="form" label-width="120px">
+            <el-form-item label="路由名字">
+                <el-input v-model="form.name"></el-input>
             </el-form-item>
-            <el-form-item label="登录名">
-                <el-input v-model="form.username"></el-input>
-            </el-form-item>
-            <el-form-item label="邮箱">
-                <el-input v-model="form.email"></el-input>
-            </el-form-item>
-            <el-form-item label="手机号">
-                <el-input v-model="form.mobile"></el-input>
+            <el-form-item label="路由规则">
+                <el-input v-model="form.route"></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="onSubmit">保存</el-button>
@@ -22,28 +16,22 @@
 </template>
 
 <script>
-  import { addUser } from '@/api/admin'
+  import { addRoute } from '@/api/router'
 
   export default {
     data() {
       return {
         form: {
-          nickname: '',
-          username: '',
-          email: '',
-          mobile: '',
+          name: '',
+          route: '',
         }
       }
     },
     methods: {
       onSubmit() {
-        const that = this
-
-        const params = this.form
-
-        addUser(params).then(response => {
+        addRoute(this.form).then(response => {
           const data = response.data
-          console.log(response)
+          console.log(data)
           this.$message('保存成功')
         })
       },

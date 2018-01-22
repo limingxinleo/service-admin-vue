@@ -10,7 +10,7 @@ export function getRoutes(params) {
 
 export function addRoute(params) {
   return request({
-    url: '/api/user/save',
+    url: '/api/router/save',
     method: 'post',
     params
   })
