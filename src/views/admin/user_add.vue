@@ -31,7 +31,7 @@
           nickname: '',
           username: '',
           email: '',
-          mobile: '',
+          mobile: ''
         }
       }
     },

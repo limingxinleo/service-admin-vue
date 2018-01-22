@@ -14,7 +14,7 @@
                         {{scope.row.id}}
                     </template>
                 </el-table-column>
-                <el-table-column label="路由名" width="110" align="center">
+                <el-table-column label="路由名" width="200" align="center">
                     <template slot-scope="scope">
                         <span>{{scope.row.name}}</span>
                     </template>
@@ -24,7 +24,7 @@
                         <span>{{scope.row.route}}</span>
                     </template>
                 </el-table-column>
-                <el-table-column class-name="status-col" label="路由等级" width="110" align="center">
+                <el-table-column class-name="status-col" label="路由等级" width="200" align="center">
                     <template slot-scope="scope">
                         <el-tag :type="scope.row.type | statusFilter">{{scope.row.typeName}}</el-tag>
                     </template>
@@ -79,8 +79,8 @@
       },
       reloadRoutes() {
         reloadRoutes().then(response => {
-          const data = response.data
-          console.log(data)
+          console.log(response.data)
+          this.fetchData()
         })
       }
     }

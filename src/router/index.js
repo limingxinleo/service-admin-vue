@@ -74,6 +74,26 @@ export const constantRouterMap = [
     ]
   },
   {
+    path: '/role',
+    component: Layout,
+    redirect: '/role/roles',
+    name: '角色管理',
+    meta: { title: '角色管理', icon: 'example' },
+    children: [
+      {
+        path: 'roles',
+        name: '角色列表',
+        component: () => import('@/views/role/roles'),
+        meta: { title: '角色列表', icon: 'table' }
+      }, {
+        path: 'role_add',
+        name: '新增角色',
+        component: () => import('@/views/role/role_add'),
+        meta: { title: '新增角色', icon: 'table' }
+      }
+    ]
+  },
+  {
     path: '/example',
     component: Layout,
     redirect: '/example/table',
