@@ -99,7 +99,7 @@
       handleCurrentChange(val) {
         this.pageIndex = val
         this.fetchData()
-      },
+      }
     }
   }
 </script>
