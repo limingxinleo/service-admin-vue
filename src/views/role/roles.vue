@@ -38,10 +38,10 @@
         </div>
 
         <el-dialog title="配置路由" :visible.sync="dialogFormVisible">
-            <el-form ref="routesForm" :model="routes" label-position="left" label-width="70px"
+            <el-form ref="routesForm" :model="routes" label-position="both" label-width="70px"
                      style='width: 400px; margin-left:50px;'>
-                <el-checkbox-group :value="route.id" :key="route.id" v-for="route in routes.total" v-model="routes.my">
-                    <el-checkbox :label="route.id">{{route.name}}</el-checkbox>
+                <el-checkbox-group v-model="routes.my">
+                    <el-checkbox v-for="route in routes.total" :label="route.id">{{route.name}}</el-checkbox>
                 </el-checkbox-group>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -126,3 +126,10 @@
     }
   }
 </script>
+<style rel="stylesheet/scss" lang="scss" scoped>
+    @import "src/styles/mixin.scss";
+
+    .el-checkbox-group .el-checkbox:first-child {
+        margin-left: 30px;
+    }
+</style>
