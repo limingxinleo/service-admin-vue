@@ -31,3 +31,10 @@ export function updateRoleRouters(params) {
     params
   })
 }
+
+export function reloadRoleRouters() {
+  return request({
+    url: '/api/role/routers/reload',
+    method: 'post'
+  })
+}
