@@ -39,7 +39,7 @@
 
         <el-dialog title="配置路由" :visible.sync="dialogFormVisible">
             <el-form ref="routesForm" :model="routes" label-position="both" label-width="70px"
-                     style='width: 400px; margin-left:50px;'>
+                     style='margin-left:50px;'>
                 <el-checkbox-group v-model="routes.my">
                     <el-checkbox v-for="route in routes.total" :label="route.id">{{route.name}}</el-checkbox>
                 </el-checkbox-group>
@@ -54,7 +54,7 @@
 </template>
 
 <script>
-  import { getRoles, getRouters } from '@/api/role'
+  import { getRoles, getRouters, updateRoleRouters } from '@/api/role'
 
   export default {
     data() {
@@ -66,6 +66,7 @@
         total: 0,
         dialogFormVisible: false,
         routes: {
+          role: 0,
           my: [1, 2],
           total: []
         }
@@ -112,6 +113,7 @@
         getRouters(params).then(response => {
           that.routes.my = response.data.routes
           that.routes.total = response.data.total
+          that.routes.role = id
 
           this.dialogFormVisible = true
           this.$nextTick(() => {
@@ -120,8 +122,14 @@
         })
       },
       updateRoutes() {
-        console.log(this.$refs['routesForm'])
-        this.dialogFormVisible = false
+        console.log(this.routes)
+        const params = {
+          id: this.routes.role,
+          routes: this.routes.my
+        }
+        updateRoleRouters(params).then(response => {
+          this.dialogFormVisible = false
+        })
       }
     }
   }
