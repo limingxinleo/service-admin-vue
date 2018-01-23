@@ -15,3 +15,11 @@ export function addRole(params) {
     params
   })
 }
+
+export function getRouters(params) {
+  return request({
+    url: '/api/role/routers',
+    method: 'post',
+    params
+  })
+}

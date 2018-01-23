@@ -23,6 +23,11 @@
                     <span>{{scope.row.createdAt}}</span>
                 </template>
             </el-table-column>
+            <el-table-column align="center" label="操作" width="200">
+                <template slot-scope="scope">
+                    <el-button type="primary" size="mini" @click="setRoutes(scope.row.id)">配置路由</el-button>
+                </template>
+            </el-table-column>
         </el-table>
         <div class="pagination-container">
             <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange"
@@ -31,11 +36,25 @@
                            layout="total, sizes, prev, pager, next, jumper" :total="total">
             </el-pagination>
         </div>
+
+        <el-dialog title="配置路由" :visible.sync="dialogFormVisible">
+            <el-form ref="routesForm" :model="routes" label-position="left" label-width="70px"
+                     style='width: 400px; margin-left:50px;'>
+                <el-checkbox-group :value="route.id" :key="route.id" v-for="route in routes.total" v-model="routes.my">
+                    <el-checkbox :label="route.id">{{route.name}}</el-checkbox>
+                </el-checkbox-group>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="dialogFormVisible = false">取消</el-button>
+                <el-button type="primary" @click="updateRoutes">保存</el-button>
+            </div>
+        </el-dialog>
+
     </div>
 </template>
 
 <script>
-  import { getRoles } from '@/api/role'
+  import { getRoles, getRouters } from '@/api/role'
 
   export default {
     data() {
@@ -44,7 +63,12 @@
         listLoading: true,
         pageIndex: 1,
         pageSize: 10,
-        total: 0
+        total: 0,
+        dialogFormVisible: false,
+        routes: {
+          my: [1, 2],
+          total: []
+        }
       }
     },
     filters: {
@@ -79,6 +103,25 @@
       handleCurrentChange(val) {
         this.pageIndex = val
         this.fetchData()
+      },
+      setRoutes(id) {
+        const that = this
+        const params = {
+          id: id
+        }
+        getRouters(params).then(response => {
+          that.routes.my = response.data.routes
+          that.routes.total = response.data.total
+
+          this.dialogFormVisible = true
+          this.$nextTick(() => {
+            this.$refs['routesForm'].clearValidate()
+          })
+        })
+      },
+      updateRoutes() {
+        console.log(this.$refs['routesForm'])
+        this.dialogFormVisible = false
       }
     }
   }
