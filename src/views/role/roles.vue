@@ -186,7 +186,7 @@
           routerId: routerId
         }
         updateRouter(params).then(response => {
-          this.setRoutes(this.router.roleId)
+          this.searchRoleRouter()
         })
       },
       reloadRoutes() {
