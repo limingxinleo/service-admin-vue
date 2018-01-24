@@ -32,14 +32,14 @@
                 </el-table-column>
                 <el-table-column align="center" label="操作" width="200">
                     <template slot-scope="scope">
-                        <el-button type="primary" size="mini" @click="setRoutes(scope.row.id)">配置路由</el-button>
+                        <el-button type="primary" size="mini" @click="setRoleId(scope.row.id)">配置路由</el-button>
                     </template>
                 </el-table-column>
             </el-table>
             <div class="pagination-container">
                 <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange"
                                :current-page.sync="pageIndex"
-                               :page-sizes="[10,20,30, 50]" :page-size="pageSize"
+                               :page-sizes="[10,20,30,50]" :page-size="pageSize"
                                layout="total, sizes, prev, pager, next, jumper" :total="total">
                 </el-pagination>
             </div>
@@ -47,6 +47,15 @@
         </div>
 
         <el-dialog title="配置路由" :visible.sync="dialogTableVisible">
+            <el-input style="width: 200px;" class="filter-item" placeholder="路由名"
+                      v-model="router.searchText"></el-input>
+            <el-select style="width: 140px" class="filter-item" v-model="router.searchType">
+                <el-option v-for="v in router.searchTypes" :label='v.label' :value="v.key" :key='v.key'></el-option>
+            </el-select>
+            <el-button class="filter-item" type="primary" icon="el-icon-search" @click="searchRoleRouter">搜索
+            </el-button>
+
+            <div style="height: 10px"></div>
             <el-table :data="router.list" border fit highlight-current-row>
                 <el-table-column align="center" label='ID' width="95">
                     <template slot-scope="scope">
@@ -102,7 +111,12 @@
           pageSize: 8,
           searchText: '',
           total: 0,
-          list: []
+          list: [],
+          searchType: 0,
+          searchTypes: [
+            { label: '全部', key: 0 },
+            { label: '已绑定路由', key: 1 }
+          ]
         }
       }
     },
@@ -139,12 +153,20 @@
         this.pageIndex = val
         this.fetchData()
       },
-      setRoutes(id) {
+      setRoleId(id) {
         this.router.roleId = id
+        this.router.pageIndex = 1
+        this.router.searchText = ''
+        this.router.searchType = 0
+        this.searchRoleRouter()
+      },
+      searchRoleRouter() {
         const params = {
-          id: id,
+          id: this.router.roleId,
           pageIndex: this.router.pageIndex - 1,
-          pageSize: this.router.pageSize
+          pageSize: this.router.pageSize,
+          searchText: this.router.searchText,
+          searchType: this.router.searchType
         }
         getRouters(params).then(response => {
           this.router.total = response.data.total
@@ -154,7 +176,7 @@
       },
       handleDialogRouterPageChange(val) {
         this.router.pageIndex = val
-        this.setRoutes(this.router.roleId)
+        this.searchRoleRouter()
       },
       updateRouter(routerId) {
         const params = {
