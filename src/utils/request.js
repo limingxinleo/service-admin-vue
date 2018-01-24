@@ -12,9 +12,8 @@ const service = axios.create({
 
 // request拦截器
 service.interceptors.request.use(config => {
-
   if (config.method === 'post') {
-    config.data = qs.stringify(config.data);
+    config.data = qs.stringify(config.data)
   }
 
   if (store.getters.token) {
