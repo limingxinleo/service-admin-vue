@@ -169,7 +169,7 @@
           searchText: this.router.searchText,
           searchType: this.router.searchType
         }
-        if (this.router.searchType == 1) {
+        if (this.router.searchType === 1) {
           this.hideDialogPagination = true
         } else {
           this.hideDialogPagination = false
