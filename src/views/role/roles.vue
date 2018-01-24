@@ -169,11 +169,7 @@
           searchText: this.router.searchText,
           searchType: this.router.searchType
         }
-        if (this.router.searchType === 1) {
-          this.hideDialogPagination = true
-        } else {
-          this.hideDialogPagination = false
-        }
+
         getRouters(params).then(response => {
           this.router.total = response.data.total
           this.router.list = response.data.list
