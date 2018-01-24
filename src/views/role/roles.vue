@@ -82,7 +82,7 @@
                     </template>
                 </el-table-column>
             </el-table>
-            <div class="pagination-container">
+            <div class="pagination-container" :hidden="hideDialogPagination">
                 <el-pagination background @current-change="handleDialogRouterPageChange"
                                :current-page.sync="router.pageIndex" :page-size="router.pageSize"
                                layout="total, prev, pager, next" :total="router.total">
@@ -105,6 +105,7 @@
         pageSize: 10,
         total: 0,
         dialogTableVisible: false,
+        hideDialogPagination: false,
         router: {
           roleId: 0,
           pageIndex: 1,
@@ -167,6 +168,11 @@
           pageSize: this.router.pageSize,
           searchText: this.router.searchText,
           searchType: this.router.searchType
+        }
+        if (this.router.searchType == 1) {
+          this.hideDialogPagination = true
+        } else {
+          this.hideDialogPagination = false
         }
         getRouters(params).then(response => {
           this.router.total = response.data.total
