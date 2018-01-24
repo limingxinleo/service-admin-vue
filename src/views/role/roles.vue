@@ -57,12 +57,12 @@
 
             <div style="height: 10px"></div>
             <el-table :data="router.list" border fit highlight-current-row>
-                <el-table-column align="center" label='ID' width="95">
+                <el-table-column align="center" label='ID' width="90">
                     <template slot-scope="scope">
                         {{scope.row.id}}
                     </template>
                 </el-table-column>
-                <el-table-column align="center" label='路由名' width="95">
+                <el-table-column align="center" label='路由名' width="120">
                     <template slot-scope="scope">
                         {{scope.row.name}}
                     </template>
@@ -72,7 +72,7 @@
                         {{scope.row.route}}
                     </template>
                 </el-table-column>
-                <el-table-column align="center" label='操作' width="95">
+                <el-table-column align="center" label='操作' width="120">
                     <template slot-scope="scope">
                         <el-button v-if="scope.row.bound == true" type="danger" size="mini"
                                    @click="updateRouter(scope.row.id)">解绑路由
