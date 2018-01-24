@@ -46,16 +46,38 @@
 
         </div>
 
-        <el-dialog title="配置路由" :visible.sync="dialogFormVisible">
-            <el-form ref="routesForm" :model="routes" label-position="both" label-width="70px"
-                     style='margin-left:50px;'>
-                <el-checkbox-group v-model="routes.my">
-                    <el-checkbox v-for="route in routes.total" :label="route.id">{{route.name}}</el-checkbox>
-                </el-checkbox-group>
-            </el-form>
-            <div slot="footer" class="dialog-footer">
-                <el-button @click="dialogFormVisible = false">取消</el-button>
-                <el-button type="primary" @click="updateRoutes">保存</el-button>
+        <el-dialog title="配置路由" :visible.sync="dialogTableVisible">
+            <el-table :data="router.list" border fit highlight-current-row>
+                <el-table-column align="center" label='ID' width="95">
+                    <template slot-scope="scope">
+                        {{scope.row.id}}
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" label='路由名' width="95">
+                    <template slot-scope="scope">
+                        {{scope.row.name}}
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" label='路由规则'>
+                    <template slot-scope="scope">
+                        {{scope.row.route}}
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" label='操作' width="95">
+                    <template slot-scope="scope">
+                        <el-button v-if="scope.row.bound == true" type="danger" size="mini"
+                                   @click="updateRouter(scope.row.id)">解绑路由
+                        </el-button>
+                        <el-button v-else type="primary" size="mini" @click="updateRouter(scope.row.id)">绑定路由
+                        </el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+            <div class="pagination-container">
+                <el-pagination background @current-change="handleDialogRouterPageChange"
+                               :current-page.sync="router.pageIndex" :page-size="router.pageSize"
+                               layout="total, prev, pager, next" :total="router.total">
+                </el-pagination>
             </div>
         </el-dialog>
 
@@ -63,7 +85,7 @@
 </template>
 
 <script>
-  import { getRoles, getRouters, updateRoleRouters, reloadRoleRouters } from '@/api/role'
+  import { getRoles, getRouters, updateRouter, reloadRoleRouters } from '@/api/role'
 
   export default {
     data() {
@@ -73,11 +95,14 @@
         pageIndex: 1,
         pageSize: 10,
         total: 0,
-        dialogFormVisible: false,
-        routes: {
-          role: 0,
-          my: [1, 2],
-          total: []
+        dialogTableVisible: false,
+        router: {
+          roleId: 0,
+          pageIndex: 1,
+          pageSize: 5,
+          searchText: '',
+          total: 0,
+          list: []
         }
       }
     },
@@ -115,29 +140,29 @@
         this.fetchData()
       },
       setRoutes(id) {
-        const that = this
+        this.router.roleId = id
         const params = {
-          id: id
+          id: id,
+          pageIndex: this.router.pageIndex - 1,
+          pageSize: this.router.pageSize
         }
         getRouters(params).then(response => {
-          that.routes.my = response.data.routes
-          that.routes.total = response.data.total
-          that.routes.role = id
-
-          this.dialogFormVisible = true
-          this.$nextTick(() => {
-            this.$refs['routesForm'].clearValidate()
-          })
+          this.router.total = response.data.total
+          this.router.list = response.data.list
+          this.dialogTableVisible = true
         })
       },
-      updateRoutes() {
-        console.log(this.routes)
+      handleDialogRouterPageChange(val) {
+        this.router.pageIndex = val
+        this.setRoutes(this.router.roleId)
+      },
+      updateRouter(routerId) {
         const params = {
-          id: this.routes.role,
-          routes: this.routes.my
+          roleId: this.router.roleId,
+          routerId: routerId
         }
-        updateRoleRouters(params).then(response => {
-          this.dialogFormVisible = false
+        updateRouter(params).then(response => {
+          this.setRoutes(this.router.roleId)
         })
       },
       reloadRoutes() {

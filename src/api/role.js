@@ -24,7 +24,7 @@ export function getRouters(params) {
   })
 }
 
-export function updateRoleRouters(params) {
+export function updateRouter(params) {
   return request({
     url: '/api/role/routers/update',
     method: 'post',
