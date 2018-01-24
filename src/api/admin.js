@@ -4,7 +4,7 @@ export function getUsers(params) {
   return request({
     url: '/api/user/list',
     method: 'post',
-    params
+    data: params
   })
 }
 
@@ -12,7 +12,7 @@ export function addUser(params) {
   return request({
     url: '/api/user/save',
     method: 'post',
-    params
+    data: params
   })
 }
 
@@ -20,7 +20,7 @@ export function getRoles(params) {
   return request({
     url: '/api/user/roles',
     method: 'post',
-    params
+    data: params
   })
 }
 
@@ -28,6 +28,6 @@ export function updateRole(params) {
   return request({
     url: '/api/user/roles/update',
     method: 'post',
-    params
+    data: params
   })
 }

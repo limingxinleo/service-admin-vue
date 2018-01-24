@@ -4,7 +4,7 @@ export function getRoutes(params) {
   return request({
     url: '/api/router/list',
     method: 'post',
-    params
+    data: params
   })
 }
 
@@ -12,7 +12,7 @@ export function addRoute(params) {
   return request({
     url: '/api/router/save',
     method: 'post',
-    params
+    data: params
   })
 }
 
