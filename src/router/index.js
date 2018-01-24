@@ -68,6 +68,7 @@ export const constantRouterMap = [
       }, {
         path: 'route_add',
         name: '新增路由',
+        hidden: true,
         component: () => import('@/views/router/route_add'),
         meta: { title: '新增路由', icon: 'table' }
       }

@@ -33,12 +33,62 @@
                     <span>{{scope.row.createdAt}}</span>
                 </template>
             </el-table-column>
+            <el-table-column align="center" label='操作' width="120">
+                <template slot-scope="scope">
+                    <el-button type="success" size="mini" @click="setRole(scope.row.id)">设置角色</el-button>
+                </template>
+            </el-table-column>
         </el-table>
+
+        <el-dialog title="设置角色" :visible.sync="dialogTableVisible">
+            <!--<el-input style="width: 200px;" class="filter-item" placeholder="路由名"-->
+            <!--v-model="router.searchText"></el-input>-->
+            <!--<el-select style="width: 140px" class="filter-item" v-model="router.searchType">-->
+            <!--<el-option v-for="v in router.searchTypes" :label='v.label' :value="v.key" :key='v.key'></el-option>-->
+            <!--</el-select>-->
+            <!--<el-button class="filter-item" type="primary" icon="el-icon-search" @click="searchRoleRouter">搜索-->
+            <!--</el-button>-->
+
+            <!--<div style="height: 10px"></div>-->
+            <el-table :data="role.list" border fit highlight-current-row>
+                <el-table-column align="center" label='ID' width="90">
+                    <template slot-scope="scope">
+                        {{scope.row.id}}
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" label='角色名' width="120">
+                    <template slot-scope="scope">
+                        {{scope.row.roleName}}
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" label='角色介绍'>
+                    <template slot-scope="scope">
+                        {{scope.row.roleDesc}}
+                    </template>
+                </el-table-column>
+                <el-table-column align="center" label='操作' width="120">
+                    <template slot-scope="scope">
+                        <el-button v-if="scope.row.bound == true" type="danger" size="mini"
+                                   @click="updateRole(scope.row.id)">解绑角色
+                        </el-button>
+                        <el-button v-else type="primary" size="mini" @click="updateRole(scope.row.id)">绑定角色
+                        </el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+            <div class="pagination-container">
+                <el-pagination background @current-change="handleDialogRolesPageChange"
+                               :current-page.sync="role.pageIndex" :page-size="role.pageSize"
+                               layout="total, prev, pager, next" :total="role.total">
+                </el-pagination>
+            </div>
+        </el-dialog>
+
     </div>
 </template>
 
 <script>
-  import { getUsers } from '@/api/admin'
+  import { getUsers, getRoles, updateRole } from '@/api/admin'
 
   export default {
     data() {
@@ -46,7 +96,15 @@
         list: null,
         listLoading: true,
         pageIndex: 0,
-        pageSize: 10
+        pageSize: 10,
+        dialogTableVisible: false,
+        role: {
+          userId: 0,
+          list: [],
+          pageIndex: 1,
+          pageSize: 10,
+          total: 0
+        }
       }
     },
     filters: {
@@ -72,6 +130,36 @@
           that.list = data.items
           this.listLoading = false
         })
+      },
+      setRole(id) {
+        this.role.userId = id
+
+        this.searchUserRoles()
+      },
+      searchUserRoles() {
+        const params = {
+          userId: this.role.userId,
+          pageIndex: this.role.pageIndex - 1,
+          pageSize: this.role.pageSize
+        }
+
+        getRoles(params).then(response => {
+          this.role.total = response.data.total
+          this.role.list = response.data.items
+          this.dialogTableVisible = true
+        })
+      },
+      updateRole(roleId) {
+        const params = {
+          userId: this.role.userId,
+          roleId: roleId
+        }
+        updateRole(params).then(response => {
+          this.searchUserRoles()
+        })
+      },
+      handleDialogRolesPageChange() {
+
       }
     }
   }

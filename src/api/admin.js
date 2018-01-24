@@ -15,3 +15,19 @@ export function addUser(params) {
     params
   })
 }
+
+export function getRoles(params) {
+  return request({
+    url: '/api/user/roles',
+    method: 'post',
+    params
+  })
+}
+
+export function updateRole(params) {
+  return request({
+    url: '/api/user/roles/update',
+    method: 'post',
+    params
+  })
+}
