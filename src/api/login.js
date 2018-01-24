@@ -1,10 +1,10 @@
-import fetch from '@/utils/fetch'
+import request from '@/utils/request'
 
 export function login(username, password) {
-  return fetch({
-    url: '/user/login',
+  return request({
+    url: '/api/user/login',
     method: 'post',
-    data: {
+    params: {
       username,
       password
     }
@@ -12,16 +12,17 @@ export function login(username, password) {
 }
 
 export function getInfo(token) {
-  return fetch({
-    url: '/user/info',
-    method: 'get',
+  return request({
+    url: '/api/user/info',
+    method: 'post',
     params: { token }
   })
 }
 
-export function logout() {
-  return fetch({
-    url: '/user/logout',
-    method: 'post'
+export function logout(token) {
+  return request({
+    url: '/api/user/logout',
+    method: 'post',
+    params: { token }
   })
 }

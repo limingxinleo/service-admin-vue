@@ -6,7 +6,6 @@
 
 [中文文档](https://github.com/PanJiaChen/vueAdmin-template/blob/master/README-zh.md)
 
-
 ## Build Setup
 
 ``` bash
@@ -31,7 +30,7 @@ npm run build --report
 ![demo](https://github.com/PanJiaChen/PanJiaChen.github.io/blob/master/images/demo.gif)
 
 ## Extra
-If you want router permission && generate menu by user role , you can use this branch [permission-control](https://github.com/PanJiaChen/vueAdmin-template/tree/permission-control)
+If you want router permission && generate menu by user roles , you can use this branch [permission-control](https://github.com/PanJiaChen/vueAdmin-template/tree/permission-control)
 
 ## Related Project
  [vue-element-admin](https://github.com/PanJiaChen/vue-element-admin)
@@ -41,3 +40,5 @@ If you want router permission && generate menu by user role , you can use this b
 
 ## License
 [MIT](https://github.com/PanJiaChen/vueAdmin-template/blob/master/LICENSE) license.
+
+Copyright (c) 2017-present PanJiaChen
