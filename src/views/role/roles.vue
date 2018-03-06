@@ -172,7 +172,7 @@
 
         getRouters(params).then(response => {
           this.router.total = response.data.total
-          this.router.list = response.data.list
+          this.router.list = response.data.items
           this.dialogTableVisible = true
         })
       },
